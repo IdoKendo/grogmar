@@ -24,7 +24,7 @@ var x = setInterval(function() {
 
   // Display the result in the element with id="sfira_leahor"
   var sfira = "עוד " + days + " ימים, " + hours + " שעות, " + minutes + " דקות ו" + seconds + " שניות, אבל מי סופר? ";
-  document.getElementById("sfira_leahor").innerHTML = sfira.replace("2 ימים", "יומיים").replace("2 שעות", "שעתיים").replace("1 ימים", "יום").replace("1 שעות", "שעה").replace("1 דקות", "דקה");
+  document.getElementById("sfira_leahor").innerHTML = sfira.replace(" 2 ימים", " יומיים").replace(" 2 שעות", " שעתיים").replace(" 1 ימים", " יום").replace(" 1 שעות", " שעה").replace(" 1 דקות", " דקה");
 
   // If the count down is finished, write some text
   if (distance < 0) {
