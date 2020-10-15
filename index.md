@@ -23,8 +23,8 @@ var x = setInterval(function() {
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
   // Display the result in the element with id="sfira_leahor"
-  document.getElementById("sfira_leahor").innerHTML = "עוד " + days + " ימים, " + hours + " שעות, "
-  + minutes + " דקות ו" + seconds + " שניות, אבל מי סופר? ";
+  var sfira = "עוד " + days + " ימים, " + hours + " שעות, " + minutes + " דקות ו" + seconds + " שניות, אבל מי סופר? ";
+  document.getElementById("sfira_leahor").innerHTML = sfira.replace("2 ימים", "יומיים").replace("2 שעות", "שעתיים").replace("1 ימים", "יום").replace("1 שעות", "שעה");
 
   // If the count down is finished, write some text
   if (distance < 0) {
