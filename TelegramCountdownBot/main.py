@@ -27,6 +27,8 @@ def when(update, context):
             message += "ו {} שניות, ".format(seconds)
             message = message.replace(" 1 שניות", " שניה")
         message += "אבל מי סופר?"
+        if seconds and not minutes and not hours and not days:
+            message = "וואי וואי משחקים רק עוד {} שניות!! תיכנסו לדיסקורד ולרול20 כבר".format(seconds)
     else:
         message = "אללה המשחק היה אמור להתחיל כבר מה אתם שולחים לי הודעות? לכו לדיסקורד!"
 
