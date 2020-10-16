@@ -13,8 +13,20 @@ def when(update, context):
         days = td.days
         hours, remainder = divmod(td.seconds, 3600)
         minutes, seconds = divmod(remainder, 60)
-        message = "עוד {} ימים, {} שעות, {} דקות ו {} שניות, אבל מי סופר?".format(days, hours, minutes, seconds)
-        message = message.replace(" 2 ימים", " יומיים").replace(" 2 שעות", " שעתיים").replace(" 1 ימים", " יום").replace(" 1 שעות", " שעה").replace(" 1 דקות", " דקה")
+        message = "עוד "
+        if days:
+            message += "{} ימים, ".format(days)
+            message = message.replace(" 2 ימים", " יומיים").replace(" 1 ימים", " יום")
+        if hours:
+            message += "{} שעות, ".format(hours)
+            message = message.replace(" 2 שעות", " שעתיים").replace(" 1 שעות", " שעה")
+        if minutes:
+            message += "{} דקות ".format(minutes)
+            message = message.replace(" 1 דקות", " דקה")
+        if seconds:
+            message += "ו {} שניות, ".format(seconds)
+            message = message.replace(" 1 שניות", " שניה")
+        message += "אבל מי סופר?"
     else:
         message = "אללה המשחק היה אמור להתחיל כבר מה אתם שולחים לי הודעות? לכו לדיסקורד!"
 
