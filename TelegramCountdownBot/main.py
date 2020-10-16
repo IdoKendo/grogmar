@@ -4,9 +4,9 @@
 from telegram.ext import Updater, CommandHandler
 from datetime import datetime
 
+game_time = datetime.strptime('2020-10-17 20:00:00', '%Y-%m-%d %H:%M:%S')
 
 def when(update, context):
-    game_time = datetime.strptime('2020-10-17 20:00:00', '%Y-%m-%d %H:%M:%S')
     now = datetime.now()
     if now < game_time:
         td = game_time - now
@@ -35,9 +35,25 @@ def when(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text=message)
 
 
+def hype(update, context):
+    now = datetime.now()
+    if now < game_time:
+        td = game_time - now
+        days = td.days
+        if days < 1:
+            message = "עוד פחות מיום!! הייפ!! @Sezpez אבי יש הייפ"
+        else:
+            message = "תירגע יש עוד מלא זמן :("
+    else:
+        message = "יש דיאנדי יש דיאנדי יש דיאנדי יש דיאנדי יש דיאנדי הייפ הייפ הייפ הייפ"
+    context.bot.send_message(chat_id=update.effective_chat.id, text=message)
+
+
 updater = Updater(token='TOKEN', use_context=True)
 dispatcher = updater.dispatcher
-start_handler = CommandHandler('when', when)
-dispatcher.add_handler(start_handler)
+when_handler = CommandHandler('when', when)
+hype_handler = CommandHandler('hype', hype)
+dispatcher.add_handler(when_handler)
+dispatcher.add_handler(hype_handler)
 
 updater.start_polling()
