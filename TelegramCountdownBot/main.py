@@ -41,7 +41,11 @@ def hype(update, context):
         td = game_time - now
         days = td.days
         if days < 1:
-            message = "עוד פחות מיום!! הייפ!! @Sezpez אבי יש הייפ"
+            hours, remainder = divmod(td.seconds, 3600)
+            if not hours:
+                message = "עוד פחות משעה הייפ הייפ הייפ הייפ הייפ הייפ"
+            else:
+                message = "עוד פחות מיום!! הייפ!! @Sezpez אבי יש הייפ"
         else:
             message = "תירגע יש עוד מלא זמן :("
     else:
