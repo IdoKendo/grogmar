@@ -4,32 +4,39 @@
 from telegram.ext import Updater, CommandHandler
 from datetime import datetime
 
-game_time = datetime.strptime('2020-10-31 20:00:00', '%Y-%m-%d %H:%M:%S')
+
+def get_time_till_next_session():
+    game_time = datetime.strptime('2020-10-31 20:00:00', '%Y-%m-%d %H:%M:%S')
+    now = datetime.now()
+    result = {"passed": True}
+    if now < game_time:
+        td = game_time - now
+        result["days"] = td.days
+        result["hours"], remainder = divmod(td.seconds, 3600)
+        result["minutes"], result["seconds"] = divmod(remainder, 60)
+        result["passed"] = False
+    return result
 
 
 def when(update, context):
-    now = datetime.now()
-    if now < game_time:
-        td = game_time - now
-        days = td.days
-        hours, remainder = divmod(td.seconds, 3600)
-        minutes, seconds = divmod(remainder, 60)
+    result = get_time_till_next_session()
+    if not result["passed"]:
         message = "עוד "
-        if days:
-            message += "{} ימים, ".format(days)
+        if result["days"]:
+            message += "{} ימים, ".format(result["days"])
             message = message.replace(" 2 ימים", " יומיים").replace(" 1 ימים", " יום")
-        if hours:
-            message += "{} שעות, ".format(hours)
+        if result["hours"]:
+            message += "{} שעות, ".format(result["hours"])
             message = message.replace(" 2 שעות", " שעתיים").replace(" 1 שעות", " שעה")
-        if minutes:
-            message += "{} דקות ".format(minutes)
+        if result["minutes"]:
+            message += "{} דקות ".format(result["minutes"])
             message = message.replace(" 1 דקות", " דקה")
-        if seconds:
-            message += "ו {} שניות, ".format(seconds)
+        if result["seconds"]:
+            message += "ו {} שניות, ".format(result["seconds"])
             message = message.replace(" 1 שניות", " שניה")
         message += "אבל מי סופר?"
-        if seconds and not minutes and not hours and not days:
-            message = "וואי וואי משחקים רק עוד {} שניות!! תיכנסו לדיסקורד ולרול20 כבר".format(seconds)
+        if result["seconds"] and not result["minutes"] and not result["hours"] and not result["days"]:
+            message = "וואי וואי משחקים רק עוד {} שניות!! תיכנסו לדיסקורד ולרול20 כבר".format(result["seconds"])
     else:
         message = "אללה המשחק היה אמור להתחיל כבר מה אתם שולחים לי הודעות? לכו לדיסקורד!"
 
@@ -37,18 +44,15 @@ def when(update, context):
 
 
 def hype(update, context):
-    now = datetime.now()
-    if now < game_time:
-        td = game_time - now
-        days = td.days
-        if days < 1:
-            hours, remainder = divmod(td.seconds, 3600)
-            if not hours:
+    result = get_time_till_next_session()
+    if not result["passed"]:
+        if result["days"] < 1:
+            if not result["hours"]:
                 message = "עוד פחות משעה הייפ הייפ הייפ הייפ הייפ הייפ"
             else:
                 message = "עוד פחות מיום!! הייפ!! @Sezpez אבי יש הייפ"
         else:
-            message = "תירגע יש עוד מלא זמן :("
+            message = "יש עוד מלא זמן אני לא בהייפ בכלל :("
     else:
         message = "יש דיאנדי יש דיאנדי יש דיאנדי יש דיאנדי יש דיאנדי הייפ הייפ הייפ הייפ"
     context.bot.send_message(chat_id=update.effective_chat.id, text=message)
