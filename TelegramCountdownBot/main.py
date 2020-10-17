@@ -4,7 +4,8 @@
 from telegram.ext import Updater, CommandHandler
 from datetime import datetime
 
-game_time = datetime.strptime('2020-10-17 20:00:00', '%Y-%m-%d %H:%M:%S')
+game_time = datetime.strptime('2020-10-31 20:00:00', '%Y-%m-%d %H:%M:%S')
+
 
 def when(update, context):
     now = datetime.now()
