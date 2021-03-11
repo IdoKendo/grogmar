@@ -6,7 +6,7 @@ from datetime import datetime
 
 
 def get_time_till_next_session():
-    game_time = datetime.strptime('2020-10-31 20:00:00', '%Y-%m-%d %H:%M:%S')
+    game_time = datetime.strptime('2021-03-13 18:00:00', '%Y-%m-%d %H:%M:%S')
     now = datetime.now()
     result = {"passed": True}
     if now < game_time:
@@ -50,7 +50,9 @@ def hype(update, context):
             if not result["hours"]:
                 message = "עוד פחות משעה הייפ הייפ הייפ הייפ הייפ הייפ"
             else:
-                message = "עוד פחות מיום!! הייפ!! @Sezpez אבי יש הייפ"
+                message = "עוד פחות מיום!! הייפ!! @hasovel יש הייפפפפפפפ אבייייייייי"
+        elif result["days"] < 7:
+            message = "עוד פחות משבוע!! הייפ!! @hasovel אבי יש הייפ"
         else:
             message = "יש עוד מלא זמן אני לא בהייפ בכלל :("
     else:
@@ -58,11 +60,31 @@ def hype(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text=message)
 
 
+def ze_ata(update, context):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="It's you, Avi!")
+
+
+def pump(update, context):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="מי שלא ידע שמחת בית השואבה לא ידע שמחה מימיו")
+
+
+def juice(update, context):
+    picture = 'https://media.discordapp.net/attachments/762255884554076171/779774450710216734/unknown.png'
+    context.bot.sendPhoto(chat_id=update.effective_chat.id, photo=picture)
+
+
 updater = Updater(token='TOKEN', use_context=True)
 dispatcher = updater.dispatcher
 when_handler = CommandHandler('when', when)
 hype_handler = CommandHandler('hype', hype)
+avi_handler = CommandHandler('omermankal', ze_ata)
+pump_handler = CommandHandler('pump', pump)
+juice_handler = CommandHandler('juice', juice)
+
 dispatcher.add_handler(when_handler)
 dispatcher.add_handler(hype_handler)
+dispatcher.add_handler(avi_handler)
+dispatcher.add_handler(pump_handler)
+dispatcher.add_handler(juice_handler)
 
 updater.start_polling()
